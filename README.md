@@ -1,6 +1,6 @@
 # tg-channel-speckit
 
-Telegram channel data loader — extracts posts, comments, and author information from public Telegram channels into structured JSON files.
+Loads data from Telegram channels and finds the most relevant potential users for your product based on their activity and engagement in thematic channels.
 
 ## Features
 
@@ -9,6 +9,7 @@ Telegram channel data loader — extracts posts, comments, and author informatio
 - Automatic rate limiting and retry (Telegram FloodWait handling)
 - Partial export support — saves progress on interruption
 - JSON output with metadata (version, status, export timestamp)
+- Identify potential users for your product based on their activity in relevant channels
 
 ## Prerequisites
 

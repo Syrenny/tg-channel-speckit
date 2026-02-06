@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "channel-output.json",
+  "title": "Channel Data Output",
+  "description": "Schema for exported Telegram channel data",
+  "type": "object",
+  "required": ["version", "status", "exported_at", "posts_count", "comments_count", "channel"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "description": "Schema version"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["complete", "partial"],
+      "description": "Export status"
+    },
+    "exported_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 export timestamp"
+    },
+    "posts_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of posts in this export"
+    },
+    "comments_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of comments"
+    },
+    "channel": {
+      "$ref": "#/$defs/Channel"
+    }
+  },
+  "$defs": {
+    "Channel": {
+      "type": "object",
+      "required": ["id", "title", "posts"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Telegram channel ID"
+        },
+        "username": {
+          "type": ["string", "null"],
+          "description": "Channel @username"
+        },
+        "title": {
+          "type": "string",
+          "description": "Channel display title"
+        },
+        "posts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Post" }
+        }
+      }
+    },
+    "Post": {
+      "type": "object",
+      "required": ["id", "text", "date", "comments"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Message ID"
+        },
+        "text": {
+          "type": "string",
+          "description": "Post text content"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Publication date"
+        },
+        "views": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "description": "View count"
+        },
+        "comments": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Comment" }
+        }
+      }
+    },
+    "Comment": {
+      "type": "object",
+      "required": ["id", "text", "date", "author"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Comment ID"
+        },
+        "text": {
+          "type": "string",
+          "description": "Comment text"
+        },
+        "date": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Comment date"
+        },
+        "author": {
+          "$ref": "#/$defs/Author"
+        }
+      }
+    },
+    "Author": {
+      "type": "object",
+      "required": ["user_id", "first_name"],
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "description": "Telegram user ID"
+        },
+        "username": {
+          "type": ["string", "null"],
+          "description": "User @username"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "User first name"
+        },
+        "last_name": {
+          "type": ["string", "null"],
+          "description": "User last name"
+        }
+      }
+    }
+  }
+}
